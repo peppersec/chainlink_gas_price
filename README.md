@@ -1,4 +1,4 @@
-## update gas price in postgres [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/peppersec/chainlink_gas_price.svg)](https://hub.docker.com/r/peppersec/chainlink_gas_price/builds)
+# update gas price in postgres [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/peppersec/chainlink_gas_price.svg)](https://hub.docker.com/r/peppersec/chainlink_gas_price/builds)
 
 ## install
 
