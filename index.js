@@ -4,12 +4,7 @@ const { Client } = require('pg');
 const { toWei } = require('web3-utils');
 
 const connectionString = process.env.POSTGRES_STRING
-
-const client = new Client({
-  connectionString: connectionString,
-})
-client.connect()
-
+const INTERVAL = process.env.INTERVAL
 
 
 let gasPrices = {
@@ -55,13 +50,23 @@ function fetchGasPrice() {
 }
 
 async function main() {
-  const prices = await fetchGasPrice();
-  const fast = toWei(prices.fast.toString(), 'gwei')
-  console.log('fast gas price is', prices.fast , 'gwei')
-  const querytext = 'UPDATE configurations SET value = $1 WHERE name = $2'
-  client.query(querytext, [fast, 'ETH_GAS_PRICE_DEFAULT'])
-    .then()
-    .catch(e => console.error(e.stack))
-    .then(() => client.end())
+  try {
+    const client = new Client({
+      connectionString: connectionString,
+    })
+    client.connect()
+    const prices = await fetchGasPrice();
+    const fast = toWei(prices.fast.toString(), 'gwei')
+    console.log('fast gas price is', prices.fast , 'gwei')
+    const querytext = 'UPDATE configurations SET value = $1 WHERE name = $2'
+    client.query(querytext, [fast, 'ETH_GAS_PRICE_DEFAULT'])
+      .then()
+      .catch(e => console.error(e.stack))
+      .then(() => client.end())
+  } catch (e) {
+    console.error(e)
+  }
+  setTimeout(main, INTERVAL || 15000)
 }
 main()
+
