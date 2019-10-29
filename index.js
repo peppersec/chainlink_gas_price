@@ -3,7 +3,7 @@ const fetch = require('node-fetch')
 const { Client } = require('pg');
 const { toWei } = require('web3-utils');
 
-const connectionString = process.env.POSTGRES_STRING
+const connectionString = process.env.DATABASE_URL
 const INTERVAL = process.env.INTERVAL
 
 

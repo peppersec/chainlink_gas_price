@@ -7,11 +7,11 @@ npm i
 cp .env.example .env
 ```  
 
-setup `POSTGRES_STRING` 
+setup `DATABASE_URL` 
 
 .env
 ```bash
-POSTGRES_STRING=postgresql://USERNAME:PASSWORD@IP:PORT/DBNAME
+DATABASE_URL=postgresql://USERNAME:PASSWORD@IP:PORT/DBNAME
 ```
 
 node index.js
