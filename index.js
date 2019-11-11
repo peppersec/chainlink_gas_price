@@ -50,21 +50,22 @@ function fetchGasPrice() {
 }
 
 async function main() {
+  let client
   try {
-    const client = new Client({
+    client = new Client({
       connectionString: connectionString,
     })
     client.connect()
     const prices = await fetchGasPrice();
-    const fast = toWei(prices.fast.toString(), 'gwei')
-    console.log('fast gas price is', prices.fast , 'gwei')
+    const add = prices.fast + 1
+    const fast = toWei(add.toString(), 'gwei')
+    console.log('fast gas price is', fast , 'gwei')
     const querytext = 'UPDATE configurations SET value = $1 WHERE name = $2'
-    client.query(querytext, [fast, 'ETH_GAS_PRICE_DEFAULT'])
-      .then()
-      .catch(e => console.error(e.stack))
-      .then(() => client.end())
+    await client.query(querytext, [fast, 'ETH_GAS_PRICE_DEFAULT'])
   } catch (e) {
     console.error(e)
+  } finally {
+    client.end()
   }
   setTimeout(main, INTERVAL || 15000)
 }
