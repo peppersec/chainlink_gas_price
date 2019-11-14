@@ -3,9 +3,8 @@ const fetch = require('node-fetch')
 const { Client } = require('pg');
 const { toWei } = require('web3-utils');
 
-const connectionString = process.env.DATABASE_URL
+const connectionString = process.env.DATABASE_URL_GASPRICE
 const INTERVAL = process.env.INTERVAL
-
 
 let gasPrices = {
   standard: 0,
@@ -57,13 +56,14 @@ async function main() {
     })
     client.connect()
     const prices = await fetchGasPrice();
-    const add = prices.fast + 1
+    const add = prices.fast
     const fast = toWei(add.toString(), 'gwei')
     console.log('fast gas price is', fast , 'gwei')
     const querytext = 'UPDATE configurations SET value = $1 WHERE name = $2'
     await client.query(querytext, [fast, 'ETH_GAS_PRICE_DEFAULT'])
   } catch (e) {
     console.error(e)
+    process.exit(e.message)
   } finally {
     client.end()
   }

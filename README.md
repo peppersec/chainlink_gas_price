@@ -7,11 +7,12 @@ npm i
 cp .env.example .env
 ```  
 
-setup `DATABASE_URL` 
+setup `DATABASE_URL_GASPRICE` 
 
+please make sure if you use ssl mode, add the following:`?sslmode=require&ssl=true`
 .env
 ```bash
-DATABASE_URL=postgresql://USERNAME:PASSWORD@IP:PORT/DBNAME
+DATABASE_URL_GASPRICE=postgresql://USERNAME:PASSWORD@IP:PORT/DBNAME
 ```
 
 node index.js
