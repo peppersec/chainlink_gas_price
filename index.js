@@ -58,7 +58,7 @@ async function main() {
     const prices = await fetchGasPrice();
     const add = prices.fast
     const fast = toWei(add.toString(), 'gwei')
-    console.log('fast gas price is', fast , 'gwei')
+    console.log(`${Date.now()}, fast gas price: ${fast} wei == ${prices.fast} gwei`)
     const querytext = 'UPDATE configurations SET value = $1 WHERE name = $2'
     await client.query(querytext, [fast, 'ETH_GAS_PRICE_DEFAULT'])
   } catch (e) {
